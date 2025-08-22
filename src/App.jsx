@@ -17,11 +17,44 @@ const AppContainer = styled.div`
     padding: 20px;
 `;
 
+const SplashOverlay = styled.div`
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #200c04;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: ${(p) => (p.$fadeOut ? 0 : 1)};
+    transition: opacity 400ms ease;
+`;
+
+const SplashLogo = styled.img`
+    width: clamp(140px, 30vw, 220px);
+    height: auto;
+    opacity: 0.95;
+`;
+
 function App() {
     const [isRolling, setIsRolling] = useState(false);
     const [hasRolled] = useState(false); // Mantener por compatibilidad, actualmente siempre false
     const [showModal, setShowModal] = useState(false);
     const [currentPromotion, setCurrentPromotion] = useState(null);
+
+    // Splash screen state: visible ~2s y luego desvanecer
+    const [showSplash, setShowSplash] = useState(true);
+    const [splashFading, setSplashFading] = useState(false);
+
+    useEffect(() => {
+        const showTimer = setTimeout(() => {
+            setSplashFading(true);
+            const hideTimer = setTimeout(() => setShowSplash(false), 450); // espera transición
+            return () => clearTimeout(hideTimer);
+        }, 2000);
+        return () => clearTimeout(showTimer);
+    }, []);
 
     useEffect(() => {
         // Lógica previa de localStorage desactivada para demo
@@ -67,6 +100,12 @@ function App() {
                     promotion={currentPromotion}
                     onClose={handleCloseModal}
                 />
+            )}
+
+            {showSplash && (
+                <SplashOverlay $fadeOut={splashFading}>
+                    <SplashLogo src={logoPizzas} alt="Logo" />
+                </SplashOverlay>
             )}
         </AppContainer>
     );
