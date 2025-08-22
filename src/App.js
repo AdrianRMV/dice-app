@@ -103,7 +103,10 @@ function App() {
             const elapsed = performance.now() - start;
 
             // Iniciar audio ligeramente antes del fade visual
-            if (!hasStartedSoundRef.current && elapsed >= Math.max(0, SPLASH_DURATION_MS - SOUND_LEAD_MS)) {
+            if (
+                !hasStartedSoundRef.current &&
+                elapsed >= Math.max(0, SPLASH_DURATION_MS - SOUND_LEAD_MS)
+            ) {
                 hasStartedSoundRef.current = true;
                 const a = fireAudioRef.current;
                 if (a) {
@@ -120,17 +123,28 @@ function App() {
                         const t = performance.now() - soundStart;
                         let vol = 0;
                         if (t < attackMs) {
-                            const at = Math.max(0, Math.min(1, t / Math.max(1, attackMs)));
+                            const at = Math.max(
+                                0,
+                                Math.min(1, t / Math.max(1, attackMs))
+                            );
                             vol = FIRE_VOLUME * at;
                         } else {
-                            const dt = Math.max(0, Math.min(1, (t - attackMs) / Math.max(1, totalMs - attackMs)));
+                            const dt = Math.max(
+                                0,
+                                Math.min(
+                                    1,
+                                    (t - attackMs) /
+                                        Math.max(1, totalMs - attackMs)
+                                )
+                            );
                             const easedD = 1 - Math.pow(1 - dt, 3);
                             vol = FIRE_VOLUME * (1 - easedD);
                         }
                         a.volume = Math.max(0, Math.min(1, vol));
 
                         if (t < totalMs) {
-                            soundFadeRafRef.current = requestAnimationFrame(fadeSound);
+                            soundFadeRafRef.current =
+                                requestAnimationFrame(fadeSound);
                         } else {
                             a.pause();
                             a.currentTime = 0;
@@ -153,12 +167,16 @@ function App() {
         splashRafRef.current = requestAnimationFrame(tick);
 
         return () => {
-            if (splashRafRef.current) cancelAnimationFrame(splashRafRef.current);
-            if (soundFadeRafRef.current) cancelAnimationFrame(soundFadeRafRef.current);
+            if (splashRafRef.current)
+                cancelAnimationFrame(splashRafRef.current);
+            if (soundFadeRafRef.current)
+                cancelAnimationFrame(soundFadeRafRef.current);
             window.removeEventListener('pointerdown', onUserGesture);
             window.removeEventListener('keydown', onUserGesture);
             if (fireAudioRef.current) {
-                try { fireAudioRef.current.pause(); } catch (_) {}
+                try {
+                    fireAudioRef.current.pause();
+                } catch (_) {}
             }
         };
     }, []);
@@ -167,39 +185,39 @@ function App() {
     const promotions = [
         {
             id: 1,
-            title: 'Free Appetizer',
+            title: 'Promocion Ejemplo Dado 1',
             image: 'https://images.unsplash.com/photo-1546241072-48010ad2862c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Enjoy a free appetizer with your next meal!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 1',
         },
         {
             id: 2,
-            title: '10% Off Dinner',
+            title: 'Promocion Ejemplo Dado 2',
             image: 'https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Get 10% off your next dinner!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 2',
         },
         {
             id: 3,
-            title: 'Free Dessert',
+            title: 'Promocion Ejemplo Dado 3',
             image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Enjoy a free dessert with your meal!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 3',
         },
         {
             id: 4,
-            title: 'Buy One Get One Free',
+            title: 'Promocion Ejemplo Dado 4',
             image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Buy one entrée, get one free!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 4',
         },
         {
             id: 5,
-            title: 'Free Drink',
+            title: 'Promocion Ejemplo Dado 5',
             image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Enjoy a free drink with your meal!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 5',
         },
         {
             id: 6,
-            title: '25% Off Total Bill',
+            title: 'Promocion Ejemplo Dado 6',
             image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-            description: 'Get 25% off your total bill!',
+            description: 'Texto mas descriptivo de la promocion ejemplo dado 6',
         },
     ];
 
