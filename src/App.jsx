@@ -4,7 +4,7 @@ import DiceThreeComponent from './components/DiceThreeComponent';
 import PromotionModal from './components/PromotionModal';
 import Header from './components/Header';
 import promotions from './data/promotions';
-import logoPizzas from './images/logo-pizzas.png';
+// import logoPizzas from './images/logo-pizzas.png';
 import confetti from 'canvas-confetti';
 import './App.css';
 
@@ -130,7 +130,7 @@ function App() {
 
     return (
         <AppContainer>
-            <Header logo={logoPizzas} title="DADO SORPRESA" />
+            <Header logo={appLogo} title="DADO SORPRESA" />
 
             <DiceThreeComponent
                 isRolling={isRolling}
@@ -148,7 +148,7 @@ function App() {
 
             {showSplash && (
                 <SplashOverlay $fadeOut={splashFading}>
-                    <SplashLogo src={logoPizzas} alt="Logo" />
+                    <SplashLogo src={appLogo} alt="Logo" />
                 </SplashOverlay>
             )}
         </AppContainer>
