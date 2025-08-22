@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import type { Promotion } from '../data/promotions';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -96,20 +97,25 @@ const PromotionDescription = styled.p`
   color: #555;
 `;
 
-const PromotionModal = ({ promotion, onClose }) => {
-    return (
-        <ModalOverlay onClick={onClose}>
-            <ModalContent onClick={(e) => e.stopPropagation()}>
-                <CloseButton onClick={onClose}>&times;</CloseButton>
-                <PromotionTitle>Felicidades!</PromotionTitle>
-                <PromotionImage src={promotion.image} alt={promotion.title} />
-                <PromotionTitle>{promotion.title}</PromotionTitle>
-                <PromotionDescription>
-                    {promotion.description}
-                </PromotionDescription>
-            </ModalContent>
-        </ModalOverlay>
-    );
+interface PromotionModalProps {
+  promotion: Promotion;
+  onClose: () => void;
+}
+
+const PromotionModal: React.FC<PromotionModalProps> = ({ promotion, onClose }) => {
+  return (
+    <ModalOverlay onClick={onClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <CloseButton onClick={onClose}>&times;</CloseButton>
+        <PromotionTitle>Felicidades!</PromotionTitle>
+        <PromotionImage src={promotion.image} alt={promotion.title} />
+        <PromotionTitle>{promotion.title}</PromotionTitle>
+        <PromotionDescription>
+          {promotion.description}
+        </PromotionDescription>
+      </ModalContent>
+    </ModalOverlay>
+  );
 };
 
 export default PromotionModal;

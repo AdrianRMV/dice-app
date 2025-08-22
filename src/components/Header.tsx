@@ -18,11 +18,18 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-export default function Header({ logo, title }) {
+interface HeaderProps {
+  logo: string;
+  title: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ logo, title }) => {
   return (
     <Container>
       <Logo src={logo} alt="pizzas" />
       <Title>{title}</Title>
     </Container>
   );
-}
+};
+
+export default Header;

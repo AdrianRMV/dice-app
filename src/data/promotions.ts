@@ -1,4 +1,11 @@
-const promotions = [
+export interface Promotion {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+}
+
+const promotions: Promotion[] = [
   {
     id: 1,
     title: 'Promocion Ejemplo Dado 1',
