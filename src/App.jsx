@@ -5,6 +5,7 @@ import PromotionModal from './components/PromotionModal';
 import Header from './components/Header';
 import promotions from './data/promotions';
 import logoPizzas from './images/logo-pizzas.png';
+import confetti from 'canvas-confetti';
 import './App.css';
 
 const AppContainer = styled.div`
@@ -64,6 +65,37 @@ function App() {
         //   if (savedPromotion) setCurrentPromotion(JSON.parse(savedPromotion));
         // }
     }, []);
+
+    const launchConfetti = () => {
+        const duration = 1600;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 45, spread: 360, ticks: 70, zIndex: 3000 }; // sobre el modal
+
+        const interval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+            const particleCount = Math.max(30, 80 * (timeLeft / duration));
+            // Disparos desde lados opuestos
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: Math.random() * 0.2 + 0.1, y: 0.6 },
+            });
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: 0.9 - Math.random() * 0.2, y: 0.6 },
+            });
+        }, 200);
+    };
+
+    useEffect(() => {
+        if (showModal) {
+            launchConfetti();
+        }
+    }, [showModal]);
 
     const handleRollComplete = (value) => {
         setIsRolling(false);
