@@ -53,7 +53,7 @@ function App() {
             setSplashFading(true);
             const hideTimer = setTimeout(() => setShowSplash(false), 450); // espera transición
             return () => clearTimeout(hideTimer);
-        }, 2000);
+        }, 1000);
         return () => clearTimeout(showTimer);
     }, []);
 
@@ -67,28 +67,40 @@ function App() {
     }, []);
 
     const launchConfetti = () => {
-        const duration = 1600;
+        const duration = 1800;
         const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 45, spread: 360, ticks: 70, zIndex: 3000 }; // sobre el modal
+        const defaults = {
+            startVelocity: 18,
+            spread: 100,
+            ticks: 100,
+            gravity: 2,
+            drift: 0.2,
+            scalar: 1,
+            zIndex: 3000,
+        };
 
-        const interval = setInterval(() => {
+        function frame() {
             const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) {
-                return clearInterval(interval);
-            }
-            const particleCount = Math.max(30, 80 * (timeLeft / duration));
-            // Disparos desde lados opuestos
+            if (timeLeft <= 0) return;
+            const progress = 1 - timeLeft / duration;
+            const particleCount = Math.max(12, Math.floor(20 * (1 - progress)));
+
+            // ráfagas suaves desde una banda central superior
             confetti({
                 ...defaults,
                 particleCount,
-                origin: { x: Math.random() * 0.2 + 0.1, y: 0.6 },
+                origin: { x: 0.3 + Math.random() * 0.4, y: 0 },
             });
-            confetti({
-                ...defaults,
-                particleCount,
-                origin: { x: 0.9 - Math.random() * 0.2, y: 0.6 },
-            });
-        }, 200);
+            // confetti({
+            //     ...defaults,
+            //     particleCount: Math.max(8, particleCount - 4),
+            //     origin: { x: 0.15 + Math.random() * 0.7, y: 0 },
+            // });
+
+            requestAnimationFrame(frame);
+        }
+
+        frame();
     };
 
     useEffect(() => {
