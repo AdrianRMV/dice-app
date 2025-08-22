@@ -181,7 +181,7 @@ function App() {
         };
     }, []);
 
-    // Promotions for each side of the dice (1-6)
+    // Promotions for each side of the dice (1-6) - Auto-deploy test
     const promotions = [
         {
             id: 1,
