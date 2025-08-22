@@ -8,6 +8,9 @@ import promotions from './data/promotions';
 import confetti from 'canvas-confetti';
 import './App.css';
 
+// Usar el logo desde la carpeta public
+const appLogo = process.env.PUBLIC_URL + '/logo.png';
+
 const AppContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -91,11 +94,6 @@ function App() {
                 particleCount,
                 origin: { x: 0.3 + Math.random() * 0.4, y: 0 },
             });
-            // confetti({
-            //     ...defaults,
-            //     particleCount: Math.max(8, particleCount - 4),
-            //     origin: { x: 0.15 + Math.random() * 0.7, y: 0 },
-            // });
 
             requestAnimationFrame(frame);
         }
