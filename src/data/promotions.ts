@@ -9,7 +9,7 @@ const promotions: Promotion[] = [
     {
         id: 1,
         title: '🍕 Fuego de la Tribu',
-        image: process.env.PUBLIC_URL + '/images/Boleto.jpeg',
+        image: process.env.PUBLIC_URL + '/images/Pizza.jpeg',
         description: '1 Pizza Mediana Clásica',
     },
     {
