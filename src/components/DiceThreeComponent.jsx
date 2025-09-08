@@ -223,6 +223,25 @@ const DiceThreeComponent = ({
         };
     }, []);
 
+    // Función para generar resultado con probabilidades ponderadas
+    const getWeightedRandomResult = () => {
+        // Probabilidades: cara 1 (menor) -> cara 6 (mayor)
+        // Cara 1: 5%, Cara 2: 10%, Cara 3: 15%, Cara 4: 20%, Cara 5: 25%, Cara 6: 25%
+        const weights = [5, 10, 15, 20, 25, 25]; // suma = 100
+        const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+        
+        let random = Math.random() * totalWeight;
+        
+        for (let i = 0; i < weights.length; i++) {
+            random -= weights[i];
+            if (random <= 0) {
+                return i + 1; // retorna 1-6
+            }
+        }
+        
+        return 6; // fallback a la cara con mayor probabilidad
+    };
+
     // Animación de lanzamiento
     useEffect(() => {
         if (isRolling && diceRef.current) {
@@ -231,7 +250,7 @@ const DiceThreeComponent = ({
             const speedY = Math.random() * 0.1 + 0.12;
             const speedZ = Math.random() * 0.1 + 0.12;
 
-            const newResult = Math.floor(Math.random() * 6) + 1;
+            const newResult = getWeightedRandomResult();
             setResult(newResult);
 
             let elapsedTime = 0;
