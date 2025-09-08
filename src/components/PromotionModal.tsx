@@ -83,7 +83,7 @@ const PromotionImage = styled.img.attrs({ loading: 'lazy' })`
   margin-bottom: 20px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   max-height: 50vh; /* no exceder la mitad de la altura de la pantalla */
-  object-fit: contain; /* evita recortes y distorsiones */
+  object-fit: cover; /* llena completamente el contenedor sin bordes blancos */
 
   @media (min-width: 768px) {
     max-height: 360px;
