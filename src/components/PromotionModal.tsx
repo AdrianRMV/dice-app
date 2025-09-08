@@ -83,7 +83,8 @@ const PromotionTitle = styled.h2`
 
 const PromotionImage = styled.img.attrs({ loading: 'lazy' })`
     display: block;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
     height: auto;
     border-radius: 12px;
     margin-bottom: 20px;
